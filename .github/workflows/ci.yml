@@ -16,9 +16,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: erpdb
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: edna
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -47,7 +47,7 @@ jobs:
 
       - name: Run migrations
         env:
-          DATABASE_URL: postgres://postgres:edna@localhost:5432/erpdb
+          DATABASE_URL: postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_NAME }}
         run: |
           python manage.py migrate
 
